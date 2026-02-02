@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telegram Web Clone</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-bars menu-btn"></i>
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+
+        <div class="contact-list">
+          <div class="contact-item">
+            <img src="tele.png.jpeg" class="avatar" alt="Telegram" />
+            <div class="contact-info">
+              <div class="row-top">
+                <span class="name"
+                  >Telegram <i class="fas fa-check-circle official-icon"></i
+                ></span>
+                <span class="time">07:45</span>
+              </div>
+              <div class="subtitle">Login code: 12345. Do not give...</div>
+            </div>
+          </div>
+
+          <div class="contact-item active">
+            <img src="quanglinh.jpeg" alt="" class="avatar" />
+            <div class="contact-info">
+              <div class="row-top">
+                <span class="name">Quang Linh - HCNS</span>
+                <span class="time">07:50</span>
+              </div>
+              <div class="subtitle">last seen 7 minutes ago</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <img src="2anh.jpeg" alt="" class="avatar" />
+            <div class="contact-info">
+              <div class="row-top">
+                <span class="name">2 Anh</span>
+                <span class="time">15 min</span>
+              </div>
+              <div class="subtitle">last seen 15 minutes ago</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <img src="thanh.jpeg" alt="" class="avatar" />
+            <div class="contact-info">
+              <div class="row-top">
+                <span class="name">Thanh</span>
+                <span class="time">4 hr</span>
+              </div>
+              <div class="subtitle">last seen 4 hours ago</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="avatar" style="background-color: #f1c40f">T</div>
+            <div class="contact-info">
+              <div class="row-top">
+                <span class="name">Thư</span>
+                <span class="time">Jan 21</span>
+              </div>
+              <div class="subtitle">last seen yesterday at 13:31</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="new-message-btn">
+          <i class="fas fa-pen"></i>
+        </div>
+      </div>
+
+      <div class="main-chat">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <img
+              src="quanglinh.jpeg"
+              alt=""
+              class="avatar"
+              style="width: 40px; height: 40px"
+            />
+            <div class="header-info">
+              <h3>Quang Linh - HCNS</h3>
+              <span>last seen 7 minutes ago</span>
+            </div>
+          </div>
+          <div class="chat-header-right">
+            <i class="fas fa-phone"></i>
+            <i class="fas fa-search"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+        </div>
+
+        <div class="chat-body">
+          <div class="empty-state">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/8/87/Telegram_Logo.svg"
+              alt="Sticker"
+              class="sticker-img"
+              style="filter: hue-rotate(240deg)"
+            />
+            <h4>No messages here yet...</h4>
+            <p>Send a message or tap the greeting below.</p>
+          </div>
+        </div>
+
+        <div class="chat-footer">
+          <i class="far fa-smile footer-icon"></i>
+          <input type="text" class="message-input" placeholder="Message" />
+          <i class="fas fa-paperclip footer-icon"></i>
+          <div class="mic-btn">
+            <i class="fas fa-microphone"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

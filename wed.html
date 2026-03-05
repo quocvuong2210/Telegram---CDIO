@@ -1,166 +1,142 @@
 <!doctype html>
 <html lang="vi">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram Web Clone</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
-      <div class="sidebar">
-        <div class="sidebar-header">
-          <div class="menu-icon"><i class="fas fa-bars"></i></div>
-          <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search" />
-          </div>
-        </div>
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="menu-icon"><i class="fas fa-bars"></i></div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search" />
+                </div>
+            </div>
 
-        <div class="contact-list" id="contactList">
-          <div
-            class="contact-item"
-            onclick="selectContact(this, 'Telegram', 'tele.png.jpeg', true)"
-          >
-            <img src="tele.png.jpeg" class="avatar" alt="TL" />
-            <div class="contact-info">
-              <div class="row-top">
-                <span class="name"
-                  >Telegram <i class="fas fa-check-circle official-icon"></i
+            <div class="contact-list" id="contactList">
+                <div class="contact-item" onclick="selectContact(this, 'Telegram', 'tele.png.jpeg', true)">
+                    <img src="tele.png.jpeg" class="avatar" alt="TL" />
+                    <div class="contact-info">
+                        <div class="row-top">
+                            <span class="name">Telegram <i class="fas fa-check-circle official-icon"></i
                 ></span>
-                <span class="time">07:45</span>
-              </div>
-              <div class="subtitle">Login code: 12345...</div>
-            </div>
-          </div>
+                            <span class="time">07:45</span>
+                        </div>
+                        <div class="subtitle">Login code: 12345...</div>
+                    </div>
+                </div>
 
-          <div
-            class="contact-item active"
-            onclick="
+                <div class="contact-item active" onclick="
               selectContact(this, 'Quang Linh - HCNS', 'quanglinh.jpeg', false)
-            "
-          >
-            <img src="quanglinh.jpeg" alt="QL" class="avatar" />
-            <div class="contact-info">
-              <div class="row-top">
-                <span class="name">Quang Linh - HCNS</span>
-                <span class="time">07:50</span>
-              </div>
-              <div class="subtitle">last seen 7 minutes ago</div>
-            </div>
-          </div>
+            ">
+                    <img src="quanglinh.jpeg" alt="QL" class="avatar" />
+                    <div class="contact-info">
+                        <div class="row-top">
+                            <span class="name">Quang Linh - HCNS</span>
+                            <span class="time">07:50</span>
+                        </div>
+                        <div class="subtitle">last seen 7 minutes ago</div>
+                    </div>
+                </div>
 
-          <div
-            class="contact-item"
-            onclick="selectContact(this, '2 Anh', '2anh.jpeg', false)"
-          >
-            <img src="2anh.jpeg" alt="2A" class="avatar" />
-            <div class="contact-info">
-              <div class="row-top">
-                <span class="name">2 Anh</span>
-                <span class="time">15 min</span>
-              </div>
-              <div class="subtitle">last seen 15 minutes ago</div>
+                <div class="contact-item" onclick="selectContact(this, '2 Anh', '2anh.jpeg', false)">
+                    <img src="2anh.jpeg" alt="2A" class="avatar" />
+                    <div class="contact-info">
+                        <div class="row-top">
+                            <span class="name">2 Anh</span>
+                            <span class="time">15 min</span>
+                        </div>
+                        <div class="subtitle">last seen 15 minutes ago</div>
+                    </div>
+                </div>
+                <div class="contact-item" onclick="selectContact(this, 'Thanh', 'thanh.jpeg', false)">
+                    <img src="thanh.jpeg" alt="TH" class="avatar" />
+                    <div class="contact-info">
+                        <div class="row-top">
+                            <span class="name">Thanh</span>
+                            <span class="time">4 hr</span>
+                        </div>
+                        <div class="subtitle">last seen 4 hours ago</div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div
-            class="contact-item"
-            onclick="selectContact(this, 'Thanh', 'thanh.jpeg', false)"
-          >
-            <img src="thanh.jpeg" alt="TH" class="avatar" />
-            <div class="contact-info">
-              <div class="row-top">
-                <span class="name">Thanh</span>
-                <span class="time">4 hr</span>
-              </div>
-              <div class="subtitle">last seen 4 hours ago</div>
+
+            <div class="new-message-btn">
+                <i class="fas fa-pen"></i>
             </div>
-          </div>
         </div>
 
-        <div class="new-message-btn">
-          <i class="fas fa-pen"></i>
-        </div>
-      </div>
+        <div class="main-chat">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <img src="quanglinh.jpeg" id="headerAvatar" class="avatar" style="width: 40px; height: 40px" />
+                    <div class="header-info">
+                        <h3 id="headerName">Quang Linh - HCNS</h3>
+                        <span id="headerStatus">last seen 7 minutes ago</span>
+                    </div>
+                </div>
 
-      <div class="main-chat">
-        <div class="chat-header">
-          <div class="chat-header-left">
-            <img
-              src="quanglinh.jpeg"
-              id="headerAvatar"
-              class="avatar"
-              style="width: 40px; height: 40px"
-            />
-            <div class="header-info">
-              <h3 id="headerName">Quang Linh - HCNS</h3>
-              <span id="headerStatus">last seen 7 minutes ago</span>
+                <div class="chat-header-right">
+                    <i class="fas fa-phone header-icon"></i>
+                    <i class="fas fa-search header-icon"></i>
+
+                    <div class="more-options">
+                        <i class="fas fa-ellipsis-v header-icon" id="menuBtn"></i>
+
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <div class="menu-item">
+                                <i class="fas fa-history"></i> Auto-delete
+                            </div>
+                            <div class="menu-item">
+                                <i class="fas fa-bell-slash"></i> Mute
+                            </div>
+                            <div class="menu-item"><i class="fas fa-phone"></i> Call</div>
+                            <div class="menu-item">
+                                <i class="fas fa-video"></i> Video Call
+                            </div>
+                            <div class="menu-item">
+                                <i class="fas fa-share"></i> Share contact
+                            </div>
+                            <div class="menu-item">
+                                <i class="fas fa-gift"></i> Send a Gift
+                            </div>
+                            <div class="menu-item danger">
+                                <i class="fas fa-ban"></i> Block user
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <div class="chat-header-right">
-            <i class="fas fa-phone header-icon"></i>
-            <i class="fas fa-search header-icon"></i>
-
-            <div class="more-options">
-              <i class="fas fa-ellipsis-v header-icon" id="menuBtn"></i>
-
-              <div class="dropdown-menu" id="dropdownMenu">
-                <div class="menu-item">
-                  <i class="fas fa-history"></i> Auto-delete
+            <div class="chat-body" id="chatBody">
+                <div class="empty-state">
+                    <div class="sticker-placeholder">
+                        <i class="fas fa-cat" style="font-size: 80px; color: #fff"></i>
+                    </div>
+                    <h4>No messages here yet...</h4>
+                    <p>Send a message or tap the greeting below.</p>
                 </div>
-                <div class="menu-item">
-                  <i class="fas fa-bell-slash"></i> Mute
-                </div>
-                <div class="menu-item"><i class="fas fa-phone"></i> Call</div>
-                <div class="menu-item">
-                  <i class="fas fa-video"></i> Video Call
-                </div>
-                <div class="menu-item">
-                  <i class="fas fa-share"></i> Share contact
-                </div>
-                <div class="menu-item">
-                  <i class="fas fa-gift"></i> Send a Gift
-                </div>
-                <div class="menu-item danger">
-                  <i class="fas fa-ban"></i> Block user
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="chat-body" id="chatBody">
-          <div class="empty-state">
-            <div class="sticker-placeholder">
-              <i class="fas fa-cat" style="font-size: 80px; color: #fff"></i>
+            <div class="chat-footer">
+                <i class="far fa-smile footer-icon"></i>
+                <input type="text" class="message-input" id="messageInput" placeholder="Message" />
+                <i class="fas fa-paperclip footer-icon"></i>
+                <div class="mic-btn" id="sendBtn">
+                    <i class="fas fa-microphone" id="micIcon"></i>
+                </div>
             </div>
-            <h4>No messages here yet...</h4>
-            <p>Send a message or tap the greeting below.</p>
-          </div>
         </div>
-
-        <div class="chat-footer">
-          <i class="far fa-smile footer-icon"></i>
-          <input
-            type="text"
-            class="message-input"
-            id="messageInput"
-            placeholder="Message"
-          />
-          <i class="fas fa-paperclip footer-icon"></i>
-          <div class="mic-btn" id="sendBtn">
-            <i class="fas fa-microphone" id="micIcon"></i>
-          </div>
-        </div>
-      </div>
     </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>

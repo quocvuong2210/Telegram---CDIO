@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng ký Telegram</title>
+    <link rel="stylesheet" href="style1.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" />
+        </div>
+        <h1>Đăng ký tài khoản</h1>
+        <p class="subtitle">
+            Vui lòng nhập số điện thoại và tên của bạn để bắt đầu.
+        </p>
+
+        <form id="register-form">
+            <div class="input-group">
+                <label for="reg-phone">Số điện thoại</label>
+                <div class="phone-input-container">
+                    <span class="prefix">+84</span>
+                    <input type="tel" id="reg-phone" placeholder="000 000 000" required />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="first-name">Tên</label>
+                <input type="text" id="first-name" class="standard-input" placeholder="Tên của bạn" required />
+            </div>
+
+            <div class="input-group">
+                <label for="last-name">Họ (Tùy chọn)</label>
+                <input type="text" id="last-name" class="standard-input" placeholder="Họ của bạn" />
+            </div>
+
+            <button type="submit" class="btn-primary">ĐĂNG KÝ</button>
+
+            <div class="bottom-link">
+                <a href="index.html" class="text-link">Đã có tài khoản? Đăng nhập tại đây</a
+          >
+        </div>
+      </form>
+    </div>
+
+    <script src="script1.js"></script>
+  </body>
+</html>

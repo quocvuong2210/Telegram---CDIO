@@ -1,5 +1,6 @@
 from typing import Tuple, Optional
 
+from sqlalchemy import or_
 from werkzeug.exceptions import BadRequest, Unauthorized
 
 from .. import db
@@ -30,12 +31,13 @@ def register_user(data: dict) -> Tuple[dict, int]:
     if not email and not phone:
         raise BadRequest("At least one of email or phone is required")
 
-    # Kiểm tra trùng lặp theo cấu trúc bảng
-    existing_user: Optional[User] = User.query.filter(
-        (User.username == username)
-        | ((email is not None) & (User.email == email))
-        | ((phone is not None) & (User.phone == phone))
-    ).first()
+    # Kiểm tra trùng lặp theo cấu trúc bảng (chỉ dùng biểu thức SQLAlchemy, không trộn với bool)
+    conditions = [User.username == username]
+    if email is not None:
+        conditions.append(User.email == email)
+    if phone is not None:
+        conditions.append(User.phone == phone)
+    existing_user: Optional[User] = User.query.filter(or_(*conditions)).first()
 
     if existing_user:
         # Thông báo cụ thể hơn nếu có thể

@@ -2,6 +2,7 @@ from typing import Tuple, Optional
 
 from sqlalchemy import or_
 from werkzeug.exceptions import BadRequest, Unauthorized
+from flask_jwt_extended import create_access_token
 
 from .. import db
 from ..models import User
@@ -76,6 +77,8 @@ def authenticate_user(data: dict) -> Tuple[dict, int]:
     - phone
     hoặc trường chung:
     - identifier (giá trị có thể là username/email/phone)
+    
+    Trả về user info và access_token.
     """
     identifier = (
         data.get("identifier")
@@ -101,5 +104,28 @@ def authenticate_user(data: dict) -> Tuple[dict, int]:
     user.mark_online()
     db.session.commit()
 
-    return {"user": user.to_dict()}, 200
+    # Tạo access token (identity phải là chuỗi theo yêu cầu của flask_jwt_extended)
+    access_token = create_access_token(identity=str(user.id))
+
+    return {
+        "user": user.to_dict(),
+        "access_token": access_token
+    }, 200
+
+
+def get_current_user(user_id: int) -> User:
+    """
+    Lấy user từ database bằng ID từ token.
+    Raise 404 nếu user không tồn tại.
+    """
+    # JWT identity được lưu dưới dạng string, convert về int nếu cần
+    try:
+        user_id = int(user_id)
+    except Exception:
+        pass
+
+    user: Optional[User] = User.query.get(user_id)
+    if not user:
+        raise Unauthorized("User not found")
+    return user
 

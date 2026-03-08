@@ -33,8 +33,12 @@ export default function LoginForm({ onSwitchToRegister }) {
       setIdentifier('')
       setPassword('')
       if (result.data && result.data.user) {
-        console.log('DEBUG: User logged in successfully', result.data.user)
-        login(result.data.user)
+        console.log('DEBUG: User logged in successfully', result.data)
+        // store token for authenticated requests
+        if (result.data.access_token) {
+          localStorage.setItem('access_token', result.data.access_token)
+        }
+        login(result.data.user, result.data.access_token)
       }
     } else {
       setError(result.error)

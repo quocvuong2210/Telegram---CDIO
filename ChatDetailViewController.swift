@@ -36,8 +36,7 @@ class ChatDetailViewController: UIViewController, UITableViewDataSource, UITable
         tableView.estimatedRowHeight = 80
         
         // 4. Tuyệt chiêu ép kích thước cho bản xem trước 2s (Lơ lửng như mẫu)
-        // Chiều cao 380-400 là đẹp nhất cho 4 tin nhắn của ông
-        self.preferredContentSize = CGSize(width: self.view.frame.width, height: 350)
+        self.preferredContentSize = CGSize(width: self.view.frame.width, height: 300)
         
         setupNavigationBar()
         tableView.reloadData()
@@ -56,11 +55,20 @@ class ChatDetailViewController: UIViewController, UITableViewDataSource, UITable
         guard let chat = chatData else { return }
         
         // Tạo Avatar góc phải (Đã bo tròn)
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
         let avatarImageView = UIImageView(image: chat.avatarImage)
-        avatarImageView.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        avatarImageView.layer.cornerRadius = 18 
+        avatarImageView.frame = containerView.bounds
+        avatarImageView.layer.cornerRadius = 18
         avatarImageView.clipsToBounds = true
-        let rightBarBtn = UIBarButtonItem(customView: avatarImageView)
+        avatarImageView.contentMode = .scaleAspectFill
+        containerView.addSubview(avatarImageView)
+
+        // Bật tương tác & Gắn sự kiện chạm tay
+        avatarImageView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
+        avatarImageView.addGestureRecognizer(tapGesture)
+        
+        let rightBarBtn = UIBarButtonItem(customView: containerView)
         self.navigationItem.rightBarButtonItem = rightBarBtn
         
         // Tạo Tên và "last seen" ở giữa
@@ -77,6 +85,21 @@ class ChatDetailViewController: UIViewController, UITableViewDataSource, UITable
         stackView.axis = .vertical
         stackView.alignment = .center
         self.navigationItem.titleView = stackView
+    }
+    
+    // 👇 HÀM CHÍNH ĐỂ NHẢY SANG MÀN HÌNH INFO KHI BẤM VÀO AVATAR
+    @objc func avatarTapped() {
+        print("Đã bấm vào Avatar góc phải!")
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Bắt buộc trên Storyboard màn Info phải có ID là "InfoVC"
+        let infoVC = storyboard.instantiateViewController(withIdentifier: "InfoVC") 
+        
+        // Ẩn thanh tab dưới cùng cho nó chuẩn Telegram
+        infoVC.hidesBottomBarWhenPushed = true
+        
+        self.navigationController?.pushViewController(infoVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

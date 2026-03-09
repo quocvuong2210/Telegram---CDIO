@@ -1,9 +1,3 @@
-//
-//  ChatCell.swift
-//  TELEGRAM_APP_UIKIT
-//
-//  Created by Cao Hai on 29/1/26.
-//
 
 import UIKit
 
@@ -27,7 +21,6 @@ class ChatCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 
 }

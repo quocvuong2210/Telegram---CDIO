@@ -2,68 +2,50 @@ import UIKit
 
 class ChatDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    // Nối dây TableView từ Storyboard vào đây
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var messageTextField: UITextField!
     
-    var chatData: ChatsViewController.Chat?
-    
-    struct Message {
-        let text: String
-        let time: String
-        let isIncoming: Bool
-    }
-    
-    let messages = [
-        Message(text: "Good morning!\nDo you know what time is it?", time: "11:40", isIncoming: true),
-        Message(text: "It's morning in Tokyo 😎", time: "11:43", isIncoming: false),
-        Message(text: "What is the most popular meal in Japan?", time: "11:45", isIncoming: true),
-        Message(text: "Do you like it?", time: "11:45", isIncoming: true)
-    ]
+    // Các biến hứng data từ màn hình ngoài truyền vào
+    var chatName: String = ""
+    var chatAvatar: String = ""
+    var messages: [Message] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 1. Setup cơ bản
+        navigationItem.largeTitleDisplayMode = .never
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         
-        // 2. Tuyệt kỹ "Tàng hình": Lột áo TableView để hiện ảnh nền Telegram
-        tableView.backgroundColor = .clear 
-        
-        // 3. Tối ưu chiều cao bong bóng
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         
-        // 4. Tuyệt chiêu ép kích thước cho bản xem trước 2s (Lơ lửng như mẫu)
         self.preferredContentSize = CGSize(width: self.view.frame.width, height: 300)
         
         setupNavigationBar()
         tableView.reloadData()
         
-        // 5. Tự động cuộn xuống cuối cùng để tin nhắn nằm sát thanh Input Bar
+        // Cuộn xuống tin nhắn cuối cùng khi vừa vào
         DispatchQueue.main.async {
-            if self.messages.count > 0 {
-                let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
-                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-            }
+            self.scrollToBottom(animated: false)
         }
+        
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
     
     func setupNavigationBar() {
-        guard let chat = chatData else { return }
-        
-        // Tạo Avatar góc phải (Đã bo tròn)
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
-        let avatarImageView = UIImageView(image: chat.avatarImage)
+        
+        let avatarImageView = UIImageView(image: UIImage(named: chatAvatar))
         avatarImageView.frame = containerView.bounds
         avatarImageView.layer.cornerRadius = 18
         avatarImageView.clipsToBounds = true
         avatarImageView.contentMode = .scaleAspectFill
         containerView.addSubview(avatarImageView)
 
-        // Bật tương tác & Gắn sự kiện chạm tay
         avatarImageView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
         avatarImageView.addGestureRecognizer(tapGesture)
@@ -71,9 +53,8 @@ class ChatDetailViewController: UIViewController, UITableViewDataSource, UITable
         let rightBarBtn = UIBarButtonItem(customView: containerView)
         self.navigationItem.rightBarButtonItem = rightBarBtn
         
-        // Tạo Tên và "last seen" ở giữa
         let nameLabel = UILabel()
-        nameLabel.text = chat.name
+        nameLabel.text = chatName 
         nameLabel.font = .boldSystemFont(ofSize: 16)
         
         let statusLabel = UILabel()
@@ -87,21 +68,52 @@ class ChatDetailViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationItem.titleView = stackView
     }
     
-    // 👇 HÀM CHÍNH ĐỂ NHẢY SANG MÀN HÌNH INFO KHI BẤM VÀO AVATAR
+    // --- CHUYỂN TRANG INFO ---
     @objc func avatarTapped() {
         print("Đã bấm vào Avatar góc phải!")
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        // Bắt buộc trên Storyboard màn Info phải có ID là "InfoVC"
-        let infoVC = storyboard.instantiateViewController(withIdentifier: "InfoVC") 
-        
-        // Ẩn thanh tab dưới cùng cho nó chuẩn Telegram
-        infoVC.hidesBottomBarWhenPushed = true
-        
-        self.navigationController?.pushViewController(infoVC, animated: true)
+        // Nhớ đảm bảo cái màn Info trên Storyboard có ID là InfoVC nha
+        if let infoVC = storyboard.instantiateViewController(withIdentifier: "InfoVC") as? InfoViewController {
+            // Truyền tên và avatar sang cho InfoVC
+            infoVC.infoName = self.chatName
+            infoVC.infoAvatar = self.chatAvatar
+            
+            infoVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(infoVC, animated: true)
+        }
     }
     
+    // --- GỬI TIN NHẮN ---
+    @IBAction func sendButtonTapped(_ sender: Any) {
+        guard let text = messageTextField.text, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        let currentTime = formatter.string(from: Date())
+        
+        let newMessage = Message(text: text, time: currentTime, isIncoming: false)
+        messages.append(newMessage)
+        
+        let newIndexPath = IndexPath(row: messages.count - 1, section: 0)
+        tableView.insertRows(at: [newIndexPath], with: .bottom)
+        
+        scrollToBottom(animated: true)
+        
+        messageTextField.text = ""
+    }
+    
+    // Hàm hỗ trợ: Tự động cuộn bảng xuống dòng cuối cùng
+    func scrollToBottom(animated: Bool) {
+        if messages.count > 0 {
+            let indexPath = IndexPath(row: messages.count - 1, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+        }
+    }
+    
+    // --- VẼ BẢNG TIN NHẮN DỰA TRÊN DATA VỪA HỨNG ĐƯỢC ---
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
@@ -112,11 +124,9 @@ class ChatDetailViewController: UIViewController, UITableViewDataSource, UITable
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ChatMessageCell
         
-        // Đổ data
         cell.messageLabel.text = message.text
         cell.timeLabel.text = message.time
         
-        // Đảm bảo nền của từng dòng cũng trong suốt để thấy ảnh nền Rectangle
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         

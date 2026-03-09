@@ -1,9 +1,4 @@
-//
-//  ContactCell.swift
-//  TELEGRAM_APP_UIKIT
-//
-//  Created by Cao Hai on 26/2/26.
-//
+
 
 import UIKit
 
@@ -16,13 +11,11 @@ class ContactCell: UITableViewCell {
         super.awakeFromNib()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
         avatarImageView.clipsToBounds = true
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 
 }

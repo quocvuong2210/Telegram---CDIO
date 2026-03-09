@@ -1,17 +1,14 @@
 import SwiftUI
 
 struct AppearanceSwiftUIView: View {
-    // Các biến trạng thái để giao diện tự cập nhật khi người dùng tương tác
     @State private var textSize: Double = 14
     @State private var selectedTheme: String = "Classic"
     @State private var selectedIcon: String = "Default"
     
     var body: some View {
         Form {
-            // CỤM 1: COLOR THEME (Xem trước chat + Chọn màu)
             Section(header: Text("COLOR THEME").font(.footnote).foregroundColor(.gray)) {
                 
-                // 1.1 Khung xem trước Chat
                 VStack(spacing: 8) {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
@@ -31,12 +28,12 @@ struct AppearanceSwiftUIView: View {
                         Text("It's morning in Tokyo 😎")
                             .font(.subheadline)
                             .padding(10)
-                            .background(Color(red: 0.85, green: 0.98, blue: 0.85)) // Màu xanh lá nhạt
+                            .background(Color(red: 0.85, green: 0.98, blue: 0.85))
                             .cornerRadius(12)
                     }
                 }
                 .padding()
-                .background(Color(red: 0.85, green: 0.92, blue: 0.98)) // Nền xanh nhạt Telegram
+                .background(Color(red: 0.85, green: 0.92, blue: 0.98))
                 .cornerRadius(12)
                 .padding(.vertical, 4)
                 
@@ -54,7 +51,6 @@ struct AppearanceSwiftUIView: View {
                 }
             }
             
-            // CỤM 2: CÀI ĐẶT CHAT
             Section {
                 NavigationLink(destination: Text("Màn hình Chat Background")) {
                     Text("Chat Background")
@@ -69,21 +65,19 @@ struct AppearanceSwiftUIView: View {
                 }
             }
             
-            // CỤM 3: CHỈNH CỠ CHỮ
             Section(header: Text("TEXT SIZE").font(.footnote).foregroundColor(.gray)) {
                 HStack {
-                    Text("A").font(.system(size: 12)) // A nhỏ
+                    Text("A").font(.system(size: 12))
                     Slider(value: $textSize, in: 10...24, step: 1)
                         .accentColor(.blue)
-                    Text("A").font(.system(size: 20)) // A lớn
+                    Text("A").font(.system(size: 20))
                 }
             }
             
-            // CỤM 4: APP ICON
             Section(header: Text("APP ICON").font(.footnote).foregroundColor(.gray)) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
-                        // Tạm dùng icon máy bay giấy làm hình đại diện App
+                       
                         AppIconOptionView(name: "Default", icon: "paperplane.circle.fill", isSelected: selectedIcon == "Default")
                             .onTapGesture { selectedIcon = "Default" }
                         AppIconOptionView(name: "Default X", icon: "paperplane.circle.fill", isSelected: selectedIcon == "Default X")
@@ -105,7 +99,6 @@ struct AppearanceSwiftUIView: View {
     }
 }
 
-// 🛠️ COMPONENT: Cục chọn Theme (Vẽ hai cái bong bóng chat nhỏ xíu)
 struct ThemeOptionView: View {
     var name: String
     var color1: Color
@@ -138,7 +131,6 @@ struct ThemeOptionView: View {
     }
 }
 
-// 🛠️ COMPONENT: Cục chọn App Icon
 struct AppIconOptionView: View {
     var name: String
     var icon: String
@@ -155,7 +147,7 @@ struct AppIconOptionView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
                         .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
-                        .padding(-4) // Đẩy viền ra ngoài một chút
+                        .padding(-4)
                 )
             
             Text(name)
@@ -166,7 +158,6 @@ struct AppIconOptionView: View {
     }
 }
 
-// Preview
 struct AppearanceSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
